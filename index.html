@@ -1,13 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de nombres Rifa Carne 17</title>
+    <title>Tabla de Números</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
-    <h1>Listado de participantes</h1>
-    <h3>Apoyo a Araceli G. Chan</h3>
-    
+    <h1>Tabla de Números</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Num1</th>
+                <th>Num2</th>
+                <th>Nombre</th>
+            </tr>
+        </thead>
+        <tbody id="tabla-body">
+            <!-- Las filas de la tabla serán insertadas aquí por JavaScript -->
+        </tbody>
+    </table>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/json/lista.json')
+                .then(response => response.json())
+                .then(data => {
+                    const tablaBody = document.getElementById('tabla-body');
+                    data.data.forEach(item => {
+                        const row = document.createElement('tr');
+                        
+                        const cellNum1 = document.createElement('td');
+                        cellNum1.textContent = item.numeros[0];
+                        row.appendChild(cellNum1);
+
+                        const cellNum2 = document.createElement('td');
+                        cellNum2.textContent = item.numeros[1];
+                        row.appendChild(cellNum2);
+
+                        const cellNombre = document.createElement('td');
+                        cellNombre.textContent = item.Nombre;
+                        row.appendChild(cellNombre);
+
+                        tablaBody.appendChild(row);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error al cargar el archivo JSON:', error);
+                });
+        });
+    </script>
 </body>
 </html>
