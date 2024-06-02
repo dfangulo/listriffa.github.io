@@ -5,17 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Riffa con causa: Araceli G.</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
         table {
             width: 80%;
             border-collapse: collapse;
-            align-self: auto;
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
         }
         th, td {
             border: 1px solid #ddd;
             padding: 8px;
+            text-align: center;
         }
         th {
             background-color: #f2f2f2;
+            color: #333;
+        }
+        tbody tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+        tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+        .numero-col {
+            width: 80px; /* Fija el ancho de las columnas de números */
         }
     </style>
 </head>
@@ -24,7 +52,7 @@
     <table>
         <thead>
             <tr>
-                <th colspan="2" width="6%">Números</th>
+                <th colspan="2" class="numero-col">Números</th>
                 <th>Nombre Participante</th>
             </tr>
         </thead>
@@ -35,7 +63,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Detectar si estamos en un entorno local o en GitHub Pages
             const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
             const jsonPath = isLocal ? '/json/lista.json' : '/listriffa.github.io/json/lista.json';
 
@@ -50,17 +77,19 @@
                     const tablaBody = document.getElementById('tabla-body');
                     data.data.forEach(item => {
                         const row = document.createElement('tr');
-                        
+
                         const cellNum1 = document.createElement('td');
                         cellNum1.textContent = item.numeros[0];
+                        cellNum1.classList.add('numero-col');
                         row.appendChild(cellNum1);
 
                         const cellNum2 = document.createElement('td');
                         cellNum2.textContent = item.numeros[1];
+                        cellNum2.classList.add('numero-col');
                         row.appendChild(cellNum2);
 
                         const cellNombre = document.createElement('td');
-                        cellNombre.textContent = item.Nombre;
+                        cellNombre.textContent = item.Nombre || ' ';
                         row.appendChild(cellNombre);
 
                         tablaBody.appendChild(row);
