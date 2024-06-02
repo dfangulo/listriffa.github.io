@@ -35,8 +35,17 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            fetch('/json/lista.json')
-                .then(response => response.json())
+            // Detectar si estamos en un entorno local o en GitHub Pages
+            const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+            const jsonPath = isLocal ? '/json/lista.json' : '/listriffa.github.io/json/lista.json';
+
+            fetch(jsonPath)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
                 .then(data => {
                     const tablaBody = document.getElementById('tabla-body');
                     data.data.forEach(item => {
